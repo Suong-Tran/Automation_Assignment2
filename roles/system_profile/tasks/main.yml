@@ -1,0 +1,18 @@
+- name: chaniging in /etc/profile file 
+  block:
+    - name:  ssh timeout 
+      blockinfile: 
+        path: /etc/profile  
+        insertafter: EOF 
+        backup: yes
+        state: present
+        block: |
+          "#This is a test block added by Ansible ...... Suong Tran"
+          export TMOUT=900 
+
+    - name: setting umask 
+      lineinfile:
+        path: /etc/profile 
+        regex: "^umask"
+        line: "umask 0077"
+        state: present

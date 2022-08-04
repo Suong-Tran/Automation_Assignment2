@@ -1,0 +1,29 @@
+- name: install httpd
+  yum:
+    name: httpd 
+    state: present 
+- name: install mariadb
+  yum:
+    name: mariadb-server
+    state: present
+  notify: restart_mariadb    
+- name: install firewalld
+  yum:
+    name: firewalld 
+    state: present      
+  notify: restart_firewalld 
+  
+
+- name: Copy files to remote host
+  copy:
+    src: vm1.html
+    dest: /var/www/html/index.html
+    mode: 0444
+    
+
+- name: Copy files to remote host
+  
+  copy:
+    src: vm2.html
+    dest: /var/www/html/index.html
+    mode: 0444  

@@ -1,4 +1,7 @@
 - name: This is for assignment 2 playbook 
   hosts: linux 
   roles:
+   - webserver
+   - system_profile
+   - users
    - datadisk

@@ -1,6 +1,6 @@
 [linux]
-assingment2-1.australiacentral.cloudapp.azure.com
-assingment2-2.australiacentral.cloudapp.azure.com
+linux-centos-vm.australiacentral.cloudapp.azure.com
+linux-centos-vm1.australiacentral.cloudapp.azure.com
 
 [windows]
 terrafrom-w-vm1

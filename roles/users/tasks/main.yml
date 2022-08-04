@@ -1,0 +1,57 @@
+
+- name: Create group called cloudadmins
+  group:
+    name: "{{ cloudadmins }}"
+     
+    state: present 
+
+
+- name: Create user called user1000
+  user:
+    name: "{{userlist1}}"
+    uid: 1010
+    groups:
+      -  "{{cloudadmins}}"
+      - "{{wheel}}"
+    append: 1
+    state: present 
+
+- name: Create user called user2000
+  user:
+    name: "{{userlist2}}"
+    uid: 2020
+    groups:
+      - "{{cloudadmins}}"
+      - "{{wheel}}"
+    append: 1
+   
+    shell: /bin/bash
+    state: present     
+
+
+- name: SSH KeyGen command
+  tags: run
+  shell: > 
+    ssh-keygen -q -b 2048 -t rsa -N "" -C "creating SSH" -f ~/.ssh/id_rsa
+    creates="~/.ssh/id_rsa"
+
+- name: Fetch the keyfile from the node to master
+  tags: run
+  fetch: 
+    src: "~/.ssh/id_rsa.pub"
+    dest: "buffer/{{ansible_hostname}}-id_rsa.pub"
+    flat: yes
+    
+- name: Set authorized key took from file
+  authorized_key:
+    user: "{{userlist1}}"
+    state: present
+    key: "{{ lookup('file', '/home/yangy/assignment2/buffer/{{ansible_hostname}}-id_rsa.pub') }}"
+    
+
+- name: Set authorized key took from file
+  authorized_key:
+    user: "{{userlist2}}"
+    state: present
+    key: "{{lookup('file', '/home/yangy/assignment2/buffer/{{ansible_hostname}}-id_rsa.pub') }}"
+  

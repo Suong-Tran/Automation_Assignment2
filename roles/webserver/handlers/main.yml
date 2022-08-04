@@ -1,0 +1,14 @@
+- name: restart_httpd
+  systemd:
+    name: httpd
+    state: restarted 
+
+- name: restart_mariadb
+  systemd:
+    name: mariadb
+    state: restarted           
+    
+- name:  check the status of services 
+  shell:
+    systemctl status httpd      
+    systemctl status mariadb  
