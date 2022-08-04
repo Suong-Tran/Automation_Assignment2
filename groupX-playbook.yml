@@ -1,0 +1,4 @@
+- name: This is for assignment 2 playbook 
+  hosts: linux 
+  roles:
+   - datadisk
