@@ -1,7 +1,7 @@
 module "resource_group" {
   source   = "./modules/resource_group"
   rg      = "3552-Assignment2-RG"
-  location = "Australia Central"
+  location = "Japan East"
 }
 
 
@@ -73,8 +73,7 @@ module "load_balancer" {
   location             = module.resource_group.rg.location
   public_ip_address_id = [module.linux.Linux_public_ip_addresses]
   network_interface_id = [module.linux.network_interface_id]
-  depends_on           = [module.network, module.linux, module.windows]
-
+  depends_on           = [module.network, module.linux]
 
 }
 
@@ -83,4 +82,11 @@ module "database" {
   rg        = module.resource_group.rg.name
   location   = module.resource_group.rg.location
   depends_on = [module.network]
+}
+
+resource "null_resource" "ansible-deploy" {
+  depends_on = [module.datadisk]
+  provisioner "local-exec" {
+    command = "export ANSIBLE_HOST_KEY_CHECKING=False && ansible-playbook --private-key /home/yangy/.ssh/id_rsa -i hosts groupX-playbook.yml"
+  }
 }

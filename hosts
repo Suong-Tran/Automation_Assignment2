@@ -1,6 +1,6 @@
 [linux]
-linux-centos-vm.australiacentral.cloudapp.azure.com
-linux-centos-vm1.australiacentral.cloudapp.azure.com
+linux-centos-vm.japaneast.cloudapp.azure.com
+linux-centos-vm1.japaneast.cloudapp.azure.com
 
 [windows]
 terrafrom-w-vm1

@@ -1,0 +1,5 @@
+filesdata:
+  - path: ../files/vm1.html
+    hostname: linux-centos-vm.japaneast.cloudapp.azure.com
+  - path: ../files/vm2.html
+    hostname: linux-centos-vm1.japaneast.cloudapp.azure.com

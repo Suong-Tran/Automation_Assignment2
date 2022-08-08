@@ -24,7 +24,7 @@ resource "azurerm_lb_backend_address_pool" "bpepool" {
   name                = "BackEndAddressPool-3552"
 }
 
-resource "azurerm_network_interface_backend_address_pool_association" "lb_pool_association" {
+resource "azurerm_network_interface_backend_address_pool_association" "lb_pool_association1" {
   network_interface_id    = element(var.network_interface_id, 0)[0]
   ip_configuration_name   = "linux-centos-vm-ipconfig1"
   backend_address_pool_id = azurerm_lb_backend_address_pool.bpepool.id
@@ -36,14 +36,14 @@ resource "azurerm_network_interface_backend_address_pool_association" "lb_pool_a
   backend_address_pool_id = azurerm_lb_backend_address_pool.bpepool.id
 }
 
-
 resource "azurerm_lb_rule" "lb_rule" {
   loadbalancer_id                = azurerm_lb.assignment2.id
   name                           = "LBRule-3552"
   protocol                       = "Tcp"
-  frontend_port                  = 3389
-  backend_port                   = 3389
+  frontend_port                  = 80
+  backend_port                   = 80
   frontend_ip_configuration_name = "PublicIPAddress-3552"
+  backend_address_pool_ids       = [azurerm_lb_backend_address_pool.bpepool.id]
 }
 
 resource "azurerm_lb_probe" "lb_prob" {
@@ -54,15 +54,4 @@ resource "azurerm_lb_probe" "lb_prob" {
   port                = 80
   interval_in_seconds = 5
   number_of_probes    = 2
-}
-
-
-resource "azurerm_lb_nat_rule" "nat_rule" {
-  resource_group_name = var.rg
-  loadbalancer_id     = azurerm_lb.assignment2.id
-  name                           = "RDPAccess"
-  protocol                       = "Tcp"
-  frontend_port                  = 80
-  backend_port                   = 80
-  frontend_ip_configuration_name = "PublicIPAddress-3552"
 }

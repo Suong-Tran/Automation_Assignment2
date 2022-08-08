@@ -1,7 +1,7 @@
-- name: This is for assignment 2 playbook 
+- name: This Playbook is for Assignment02 --- N01443552
   hosts: linux 
   roles:
-   - webserver
-   - system_profile
-   - users
-   - datadisk
+    - datadisk
+    - system_profile
+    - users
+    - webserver

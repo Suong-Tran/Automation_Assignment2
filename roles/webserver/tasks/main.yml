@@ -1,29 +1,18 @@
-- name: install httpd
+---
+- name: Install httpd
   yum:
-    name: httpd 
-    state: present 
-- name: install mariadb
-  yum:
-    name: mariadb-server
+    name: httpd
     state: present
-  notify: restart_mariadb    
-- name: install firewalld
-  yum:
-    name: firewalld 
-    state: present      
-  notify: restart_firewalld 
-  
-
-- name: Copy files to remote host
+- name: Copy file to respective host
   copy:
-    src: vm1.html
+    src: "{{ item.path }}"
     dest: /var/www/html/index.html
-    mode: 0444
-    
-
-- name: Copy files to remote host
-  
-  copy:
-    src: vm2.html
-    dest: /var/www/html/index.html
-    mode: 0444  
+    group: cloudadmins
+    mode: "0444"
+  loop: "{{ filesdata }}"
+  when: inventory_hostname== item.hostname
+  notify: start_httpd_server
+- name: Atart Apache webserver
+  service:
+    name: httpd
+    enabled: yes

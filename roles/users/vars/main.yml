@@ -1,7 +1,9 @@
-cloudadmins: n01443552
+group:
+  - name: cloudadmins
+    id: 3003
+user:
+  - name: user1000
+    id: 0144
+  - name: user2000
+    id: 3552
 
-wheel: wheel
-  
-userlist1: user1000
-
-userlist2: user2000
